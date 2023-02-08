@@ -23,9 +23,9 @@ export default function App() {
     }
   }, [resultLink1, resultLink2, resultLink3]); */
   const handleSave = () => {
-    download(resultLink1, '1920x1080.mp4');
-    download(resultLink2, '1080x1920.mp4');
-    download(resultLink3, '1080x1080.mp4');
+    download(resultLink1, '1920x1080.webm');
+    download(resultLink2, '1080x1920.webm');
+    download(resultLink3, '1080x1080.webm');
   };
 
   const handleInputChange = (e) => {
@@ -120,7 +120,7 @@ function Canvas({
 
   if (mediaRecorder.current) {
     mediaRecorder.current.onstop = function (e) {
-      const blob = new Blob(chunks.current, { type: 'video/mp4' });
+      const blob = new Blob(chunks.current, { type: 'video/webm' });
       chunks.current = [];
       if (wasRecordingBad || names.length < 3) {
         setResultLink('');
