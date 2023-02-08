@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import JSZip, { FileSaver } from "jszip";
-import useDownloader from "react-use-downloader";
-import "./styles.css";
+import React, { useState, useRef, useEffect } from 'react';
+import JSZip, { FileSaver } from 'jszip';
+import useDownloader from 'react-use-downloader';
+import './styles.css';
 
 export default function App() {
   const { download } = useDownloader();
-  const [inputData, setInputData] = useState([""]);
+  const [inputData, setInputData] = useState(['']);
   const [resultLink, setResultLink] = useState(null);
   const [resultLink1, setResultLink1] = useState(null);
   const [resultLink2, setResultLink2] = useState(null);
@@ -15,22 +15,22 @@ export default function App() {
   const [resultData2, setResultData2] = useState(null);
   const [resultData3, setResultData3] = useState(null);
 
-  console.log("resultLink", resultLink);
-  console.log("resultLink1", resultLink1);
+  console.log('resultLink', resultLink);
+  console.log('resultLink1', resultLink1);
 
   /*   useEffect(() => {
     if (resultLink1 && resultLink2 && resultLink3) {
     }
   }, [resultLink1, resultLink2, resultLink3]); */
   const handleSave = () => {
-    download(resultLink1, "1920x1080.mp4");
-    download(resultLink2, "1080x1920.mp4");
-    download(resultLink3, "1080x1080.mp4");
+    download(resultLink1, '1920x1080.mp4');
+    download(resultLink2, '1080x1920.mp4');
+    download(resultLink3, '1080x1080.mp4');
   };
 
   const handleInputChange = (e) => {
     if (!e.target.value) {
-      setInputData([" "]);
+      setInputData([' ']);
     } else {
       setInputData(e.target.value.split(/\r?\n/));
     }
@@ -39,7 +39,7 @@ export default function App() {
   return (
     <div className="App">
       <h1 className="header">make _____ matter </h1>
-      <p className="description"> past names below, one mane per line </p>
+      <p className="description"> paste names below, one name per line </p>
       <div className="displayElements">
         <textarea
           spellcheck="false"
@@ -75,11 +75,11 @@ export default function App() {
       />
       <button
         className={`${
-          resultLink1 && resultLink2 && resultLink3 ? "button active" : "button"
+          resultLink1 && resultLink2 && resultLink3 ? 'button active' : 'button'
         }`}
         onClick={handleSave}
       >
-        {resultLink1 && resultLink2 && resultLink3 ? "Generate" : "Loading..."}
+        {resultLink1 && resultLink2 && resultLink3 ? 'Generate' : 'Loading...'}
       </button>
       {/*  <button className="button active" onClick={handleSave}>
         "Generate"
@@ -120,10 +120,10 @@ function Canvas({
 
   if (mediaRecorder.current) {
     mediaRecorder.current.onstop = function (e) {
-      const blob = new Blob(chunks.current, { type: "video/mp4" });
+      const blob = new Blob(chunks.current, { type: 'video/mp4' });
       chunks.current = [];
       if (wasRecordingBad || names.length < 3) {
-        setResultLink("");
+        setResultLink('');
       } else {
         // only 3 or more names will be rendered!
         setResultLink(URL.createObjectURL(blob));
@@ -137,19 +137,19 @@ function Canvas({
 
   useEffect(() => {
     if (canvas.current) {
-      ctx.current = canvas.current.getContext("2d");
+      ctx.current = canvas.current.getContext('2d');
       ctx.current.font = `700 ${fontWeight}px Bold, sans-serif`;
-      ctx.current.textBaseline = "top";
+      ctx.current.textBaseline = 'top';
 
       ctx.current.beginPath();
       ctx.current.rect(0, 0, width, height);
-      ctx.current.fillStyle = "black";
+      ctx.current.fillStyle = 'black';
       ctx.current.fill();
 
-      ctx.current.fillStyle = "#FFFFFF";
-      ctx.current.fillText("make", gap, (height - fontWeight * 3) / 2);
+      ctx.current.fillStyle = '#FFFFFF';
+      ctx.current.fillText('make', gap, (height - fontWeight * 3) / 2);
       ctx.current.fillText(
-        "matter",
+        'matter',
         gap,
         (height - fontWeight * 3) / 2 + fontWeight * 2
       );
@@ -171,10 +171,10 @@ function Canvas({
           width - gap + fontWeight / 10,
           fontWeight
         );
-        ctx.current.fillStyle = "black";
+        ctx.current.fillStyle = 'black';
         ctx.current.fill();
         //paint new name
-        ctx.current.fillStyle = "#FFFFFF";
+        ctx.current.fillStyle = '#FFFFFF';
         ctx.current.fillText(
           name,
           gap,
@@ -186,7 +186,7 @@ function Canvas({
     }
 
     if (canvas.current) {
-      if (mediaRecorder.current.state === "recording")
+      if (mediaRecorder.current.state === 'recording')
         mediaRecorder.current.stop();
       draw();
       mediaRecorder.current.start();
@@ -208,21 +208,21 @@ function Canvas({
 
   useEffect(() => {
     console.log(
-      "needed useeffect",
+      'needed useeffect',
       wasRecordingBad,
       mediaRecorder.current.state
     );
 
     if (
       wasRecordingBad === false &&
-      mediaRecorder.current.state === "recording"
+      mediaRecorder.current.state === 'recording'
     )
       mediaRecorder.current.stop();
   }, [wasRecordingBad]);
 
   return (
     <canvas
-      className={isHidden && "isHidden"}
+      className={isHidden && 'isHidden'}
       ref={canvas}
       width={widths[variant]}
       height={heights[variant]}
