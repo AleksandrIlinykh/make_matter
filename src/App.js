@@ -1,36 +1,46 @@
-import React, { useState, useRef, useEffect } from 'react';
-import JSZip, { FileSaver } from 'jszip';
-import useDownloader from 'react-use-downloader';
-import './styles.css';
+import React, { useState, useRef, useEffect } from "react";
+import useDownloader from "react-use-downloader";
+import { get1080x1080 } from "./api/1080x1080";
+import "./styles.css";
 
 export default function App() {
   const { download } = useDownloader();
-  const [inputData, setInputData] = useState(['']);
-  const [resultLink, setResultLink] = useState(null);
-  const [resultLink1, setResultLink1] = useState(null);
-  const [resultLink2, setResultLink2] = useState(null);
-  const [resultLink3, setResultLink3] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [inputData, setInputData] = useState([""]);
 
-  const [resultData1, setResultData1] = useState(null);
-  const [resultData2, setResultData2] = useState(null);
-  const [resultData3, setResultData3] = useState(null);
+  const mp4Indexes = [
+    "1080x1920.mp4",
+    "1080x1080.mp4",
+    "1920x1080.mp4",
+    "1080x1920.gif",
+    "1080x1080.gif",
+    "1920x1080.gif"
+  ];
 
-  console.log('resultLink', resultLink);
-  console.log('resultLink1', resultLink1);
+  const fetchSquareVideo = async () => {
+    setIsLoading(true);
+    /*     const url = await get1080x1080(inputData);
+    download(url, "1920x1080.gif"); */
+    Promise.all([
+      await get1080x1080(inputData, "small", "mp4"),
+      await get1080x1080(inputData, "medium", "mp4"),
+      await get1080x1080(inputData, "large", "mp4"),
+      await get1080x1080(inputData, "small", "gif"),
+      await get1080x1080(inputData, "medium", "gif"),
+      await get1080x1080(inputData, "large", "gif")
+    ]).then((values) => {
+      values.forEach((value, index) => {
+        console.log("result in promice", value);
 
-  /*   useEffect(() => {
-    if (resultLink1 && resultLink2 && resultLink3) {
-    }
-  }, [resultLink1, resultLink2, resultLink3]); */
-  const handleSave = () => {
-    download(resultLink1, '1920x1080.webm');
-    download(resultLink2, '1080x1920.webm');
-    download(resultLink3, '1080x1080.webm');
+        download(value, mp4Indexes[index]);
+      });
+      setIsLoading(false);
+    });
   };
 
   const handleInputChange = (e) => {
     if (!e.target.value) {
-      setInputData([' ']);
+      setInputData([" "]);
     } else {
       setInputData(e.target.value.split(/\r?\n/));
     }
@@ -38,11 +48,29 @@ export default function App() {
 
   return (
     <div className="App">
+      {isLoading && (
+        <div className="preloaderContainer">
+          <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      )}
       <h1 className="header">make _____ matter </h1>
       <p className="description"> paste names below, one name per line </p>
       <div className="displayElements">
         <textarea
-          spellcheck="false"
+          spellCheck="false"
           onChange={handleInputChange}
           className="input"
           id="w3review"
@@ -50,36 +78,24 @@ export default function App() {
           rows="4"
           cols="50"
         />
-        <Canvas names={inputData} setResultLink={setResultLink} />
+        <Canvas names={inputData} />
       </div>
 
-      <Canvas
-        variant={1}
-        isHidden
-        names={inputData}
-        setResultLink={setResultLink1}
-      />
-      <Canvas
-        variant={2}
-        isHidden
-        names={inputData}
-        setResultLink={setResultLink2}
-        setResultData={setResultData1}
-      />
-
-      <Canvas
-        variant={3}
-        isHidden
-        names={inputData}
-        setResultLink={setResultLink3}
-      />
       <button
         className={`${
-          resultLink1 && resultLink2 && resultLink3 ? 'button active' : 'button'
+          inputData.length < 3
+            ? "button"
+            : isLoading
+            ? "button"
+            : "button active"
         }`}
-        onClick={handleSave}
+        onClick={fetchSquareVideo}
       >
-        {resultLink1 && resultLink2 && resultLink3 ? 'Generate' : 'Loading...'}
+        {inputData.length < 3
+          ? "Type at least 3 names"
+          : isLoading
+          ? "loading"
+          : "Generate"}
       </button>
       {/*  <button className="button active" onClick={handleSave}>
         "Generate"
@@ -93,7 +109,7 @@ function Canvas({
   names,
   variant = 0,
   setResultLink,
-  setResultData,
+  setResultData
 }) {
   //initialize names
 
@@ -102,12 +118,11 @@ function Canvas({
   const canvas = useRef(null);
   const ctx = useRef(null);
   const videoStream = useRef(null);
-  const mediaRecorder = useRef(null);
   const chunks = useRef(null);
 
   const isNormalLaunch = useRef(false);
 
-  const fontWeights = [90, 160, 130, 130];
+  const fontWeights = [70, 160, 130, 130];
   const fontWeight = fontWeights[variant];
   const gaps = [124, 194, 67, 113];
   const widths = [690, 1920, 1080, 1080];
@@ -118,50 +133,29 @@ function Canvas({
   const width = widths[variant];
   const height = heights[variant];
 
-  if (mediaRecorder.current) {
-    mediaRecorder.current.onstop = function (e) {
-      const blob = new Blob(chunks.current, { type: 'video/webm' });
-      chunks.current = [];
-      if (wasRecordingBad || names.length < 3) {
-        setResultLink('');
-      } else {
-        // only 3 or more names will be rendered!
-        setResultLink(URL.createObjectURL(blob));
-        setResultData && setResultData(blob);
-      }
-    };
-    mediaRecorder.current.ondataavailable = function (e) {
-      chunks.current.push(e.data);
-    };
-  }
-
   useEffect(() => {
     if (canvas.current) {
-      ctx.current = canvas.current.getContext('2d');
+      ctx.current = canvas.current.getContext("2d");
       ctx.current.font = `700 ${fontWeight}px Bold, sans-serif`;
-      ctx.current.textBaseline = 'top';
-
-      ctx.current.beginPath();
-      ctx.current.rect(0, 0, width, height);
-      ctx.current.fillStyle = 'black';
-      ctx.current.fill();
-
-      ctx.current.fillStyle = '#FFFFFF';
-      ctx.current.fillText('make', gap, (height - fontWeight * 3) / 2);
-      ctx.current.fillText(
-        'matter',
-        gap,
-        (height - fontWeight * 3) / 2 + fontWeight * 2
-      );
-      videoStream.current = canvas.current.captureStream(30);
-      mediaRecorder.current = new MediaRecorder(videoStream.current);
-      chunks.current = [];
+      ctx.current.textBaseline = "top";
     }
   }, []);
 
   useEffect(() => {
     function draw() {
       if (ctx?.current) {
+        ctx.current.beginPath();
+        ctx.current.rect(0, 0, width, height);
+        ctx.current.fillStyle = "black";
+        ctx.current.fill();
+
+        ctx.current.fillStyle = "#FFFFFF";
+        ctx.current.fillText("make", gap, (height - fontWeight * 3) / 2);
+        ctx.current.fillText(
+          "matter",
+          gap,
+          (height - fontWeight * 3) / 2 + fontWeight * 2
+        );
         let name = names[index % names.length];
         //paint over old name
         ctx.current.beginPath();
@@ -171,10 +165,10 @@ function Canvas({
           width - gap + fontWeight / 10,
           fontWeight
         );
-        ctx.current.fillStyle = 'black';
+        ctx.current.fillStyle = "black";
         ctx.current.fill();
         //paint new name
-        ctx.current.fillStyle = '#FFFFFF';
+        ctx.current.fillStyle = "#FFFFFF";
         ctx.current.fillText(
           name,
           gap,
@@ -186,13 +180,6 @@ function Canvas({
     }
 
     if (canvas.current) {
-      if (mediaRecorder.current.state === 'recording')
-        mediaRecorder.current.stop();
-      draw();
-      mediaRecorder.current.start();
-
-      setWasRecordingBad(true);
-
       const drawInterval = setInterval(draw, 1000);
       const captureInterval = setTimeout(function () {
         setWasRecordingBad(false);
@@ -206,23 +193,9 @@ function Canvas({
     }
   }, [names]);
 
-  useEffect(() => {
-    console.log(
-      'needed useeffect',
-      wasRecordingBad,
-      mediaRecorder.current.state
-    );
-
-    if (
-      wasRecordingBad === false &&
-      mediaRecorder.current.state === 'recording'
-    )
-      mediaRecorder.current.stop();
-  }, [wasRecordingBad]);
-
   return (
     <canvas
-      className={isHidden && 'isHidden'}
+      className={isHidden && "isHidden"}
       ref={canvas}
       width={widths[variant]}
       height={heights[variant]}
