@@ -36,11 +36,11 @@ export default function App() {
     download(url, "1920x1080.gif"); */
     Promise.all([
       await get1080x1080(inputData, 'small', 'mp4', period, repeatNumber),
-      /*       await get1080x1080(inputData, "medium", "mp4"),
-      await get1080x1080(inputData, "large", "mp4"),
-      await get1080x1080(inputData, "small", "gif"),
-      await get1080x1080(inputData, "medium", "gif"),
-      await get1080x1080(inputData, "large", "gif") */
+      await get1080x1080(inputData, 'medium', 'mp4', period, repeatNumber),
+      await get1080x1080(inputData, 'large', 'mp4', period, repeatNumber),
+      await get1080x1080(inputData, 'small', 'gif', period, repeatNumber),
+      await get1080x1080(inputData, 'medium', 'gif', period, repeatNumber),
+      await get1080x1080(inputData, 'large', 'gif', period, repeatNumber),
     ]).then((values) => {
       values.forEach((value, index) => {
         console.log('result in promice', value);
