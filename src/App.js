@@ -1,12 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import useDownloader from "react-use-downloader";
 import { get1080x1080 } from "./api/1080x1080";
+import { periods, repeats } from "./constants";
 import "./styles.css";
 
 export default function App() {
   const { download } = useDownloader();
   const [isLoading, setIsLoading] = useState(false);
   const [inputData, setInputData] = useState([""]);
+
+  const [period, setPeriod] = useState(1);
+
+  const [repeatNumber, setRepeatNumber] = useState(2);
+
+  const handlePeriodChange = ({ target: { value } }) => {
+    setPeriod(value);
+  };
+
+  const handleRepeatNumberChange = ({ target: { value } }) => {
+    setRepeatNumber(value);
+  };
 
   const mp4Indexes = [
     "1080x1920.mp4",
@@ -22,12 +35,12 @@ export default function App() {
     /*     const url = await get1080x1080(inputData);
     download(url, "1920x1080.gif"); */
     Promise.all([
-      await get1080x1080(inputData, "small", "mp4"),
-      await get1080x1080(inputData, "medium", "mp4"),
+      await get1080x1080(inputData, "small", "mp4", period, repeatNumber)
+      /*       await get1080x1080(inputData, "medium", "mp4"),
       await get1080x1080(inputData, "large", "mp4"),
       await get1080x1080(inputData, "small", "gif"),
       await get1080x1080(inputData, "medium", "gif"),
-      await get1080x1080(inputData, "large", "gif")
+      await get1080x1080(inputData, "large", "gif") */
     ]).then((values) => {
       values.forEach((value, index) => {
         console.log("result in promice", value);
@@ -80,23 +93,47 @@ export default function App() {
         />
         <Canvas names={inputData} />
       </div>
-
-      <button
-        className={`${
-          inputData.length < 3
-            ? "button"
+      <div className="controlls">
+        <select
+          name="periods"
+          id="periods"
+          className="button active"
+          value={period}
+          onChange={handlePeriodChange}
+        >
+          {periods.map((period) => (
+            <option value={period}>repeat period: {period}s</option>
+          ))}
+        </select>
+        <button
+          className={`${
+            inputData.length < 3
+              ? "button"
+              : isLoading
+              ? "button"
+              : "button active"
+          }`}
+          onClick={fetchSquareVideo}
+        >
+          {inputData.length < 3
+            ? "type at least 3 names"
             : isLoading
-            ? "button"
-            : "button active"
-        }`}
-        onClick={fetchSquareVideo}
-      >
-        {inputData.length < 3
-          ? "Type at least 3 names"
-          : isLoading
-          ? "loading"
-          : "Generate"}
-      </button>
+            ? "loading"
+            : "Generate"}
+        </button>
+        <select
+          name="repeats"
+          id="repeats"
+          className="button active"
+          value={repeatNumber}
+          onChange={handleRepeatNumberChange}
+        >
+          {repeats.map((repeat) => (
+            <option value={repeat}>repeat number: {repeat}x</option>
+          ))}
+        </select>
+      </div>
+
       {/*  <button className="button active" onClick={handleSave}>
         "Generate"
       </button> */}

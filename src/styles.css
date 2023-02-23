@@ -60,7 +60,19 @@ body,
   height: 100%;
   flex-grow: 1;
 }
+
+.controlls {
+  display: flex;
+  gap: 10px;
+}
+
 .button {
+  text-align: center;
+  box-sizing: border-box;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
   height: 70px;
   width: 252px;
   border: 2px solid #3f3f3f;

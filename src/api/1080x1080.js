@@ -35,7 +35,9 @@ async function reqRep(id) {
 export const get1080x1080 = async (
   names,
   variant = "small",
-  format = "gif"
+  format = "gif",
+  period,
+  repeatNumber
 ) => {
   const dimension = {
     small: {
@@ -63,32 +65,52 @@ export const get1080x1080 = async (
 
   const clips = [];
 
-  for (let index = 0; index < names.length * 2; index++) {
-    clips.push({
-      asset: {
-        type: "html",
-        html:
-          "<div><p>make <br> " +
-          names[index % names.length] +
-          "<br> matter </p></div>",
-        css:
-          "div { text-align: left; font-family: 'Roboto'; font-style: normal; font-weight: 700; font-size:" +
-          dimension[variant].fontSize +
-          "; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } "
-      },
-      start: index,
-      length: 1,
-      offset: {
-        x: 0.1
-      }
-    });
+  for (let index = 0; index < names.length * Number(repeatNumber); index++) {
+    clips.push(
+      ...[
+        {
+          asset: {
+            type: "html",
+            html:
+              "<div><p> <br> " +
+              names[index % names.length] +
+              "<br>  </p></div>",
+            css:
+              "div { text-align: left; font-family: 'HelveticaNeueCyr'; font-style: normal; font-weight: 700; font-size:" +
+              dimension[variant].fontSize +
+              "; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } "
+          },
+          start: index * Number(period),
+          length: 0.95 * Number(period),
+          offset: {
+            x: 0.1
+          }
+        },
+        {
+          asset: {
+            type: "html",
+            html: "<div><p>make <br> <br> matter </p></div>",
+            css:
+              "div { text-align: left; font-family: 'HelveticaNeueCyr'; font-style: normal; font-weight: 700; font-size:" +
+              dimension[variant].fontSize +
+              "; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } "
+          },
+          start: index * Number(period),
+          length: Number(period),
+          offset: {
+            x: 0.1
+          }
+        }
+      ]
+    );
   }
 
   const raw = JSON.stringify({
     timeline: {
       fonts: [
         {
-          src: "https://templates.shotstack.io/basic/asset/font/roboto-bold.ttf"
+          src:
+            "https://vm-9dc5608b.na4u.ru/info/api/assets/HelveticaNeueCyr.ttf"
         }
       ],
       background: "#000000",
