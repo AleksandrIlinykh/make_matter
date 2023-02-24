@@ -67,7 +67,7 @@ export const get1080x1080 = async (
 
   for (
     let index = 0;
-    index < (names.length * format === 'gif' ? 1 : Number(repeatNumber));
+    index < names.length * (format === 'gif' ? 1 : Number(repeatNumber));
     index++
   ) {
     clips.push(
