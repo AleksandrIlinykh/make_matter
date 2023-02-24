@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/make_matter/static/css/main.7b7d8c15.css",
-    "main.js": "/make_matter/static/js/main.20dae5a1.js",
+    "main.js": "/make_matter/static/js/main.bf970e79.js",
     "static/media/HelveticaNeueCyr-Roman.eot": "/make_matter/static/media/HelveticaNeueCyr-Roman.9d7c3316bda88462d707.eot",
     "static/media/HelveticaNeueCyr-Roman.ttf": "/make_matter/static/media/HelveticaNeueCyr-Roman.0ca719c710b1fbd7e02f.ttf",
     "static/media/HelveticaNeueCyr-Medium.eot": "/make_matter/static/media/HelveticaNeueCyr-Medium.6053588ab977fb8f7880.eot",
@@ -15,10 +15,10 @@
     "static/media/HelveticaNeueCyr-Bold.woff2": "/make_matter/static/media/HelveticaNeueCyr-Bold.a737902275e936eaf242.woff2",
     "index.html": "/make_matter/index.html",
     "main.7b7d8c15.css.map": "/make_matter/static/css/main.7b7d8c15.css.map",
-    "main.20dae5a1.js.map": "/make_matter/static/js/main.20dae5a1.js.map"
+    "main.bf970e79.js.map": "/make_matter/static/js/main.bf970e79.js.map"
   },
   "entrypoints": [
     "static/css/main.7b7d8c15.css",
-    "static/js/main.20dae5a1.js"
+    "static/js/main.bf970e79.js"
   ]
 }
