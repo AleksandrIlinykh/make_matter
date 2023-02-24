@@ -30,25 +30,127 @@ export default function App() {
     '1920x1080.gif',
   ];
 
+  const [data1, setData11] = useState(null);
+  const [data2, setData12] = useState(null);
+  const [data3, setData13] = useState(null);
+  const [data4, setData14] = useState(null);
+  const [data5, setData15] = useState(null);
+  const [data6, setData16] = useState(null);
+
+  useEffect(() => {
+    if (
+      data1?.url &&
+      data2?.url &&
+      data3?.url &&
+      data4?.url &&
+      data5?.url &&
+      data6?.url
+    ) {
+      download(data1.url, data1.name);
+      download(data2.url, data2.name);
+      download(data3.url, data3.name);
+      download(data4.url, data4.name);
+      download(data5.url, data5.name);
+      download(data6.url, data6.name);
+      setIsLoading(false);
+    }
+  }, [data1, data2, data3, data4, data5, data6]);
+
+  const download1 = async () => {
+    const url = await get1080x1080(
+      inputData,
+      'small',
+      'mp4',
+      period,
+      repeatNumber
+    );
+    setData11({ name: '1080x1920.mp4', url: url });
+  };
+
+  const download2 = async () => {
+    const url = await get1080x1080(
+      inputData,
+      'small',
+      'mp4',
+      period,
+      repeatNumber
+    );
+    setData12({ name: '1080x1080.mp4', url: url });
+  };
+
+  const download3 = async () => {
+    const url = await get1080x1080(
+      inputData,
+      'medium',
+      'mp4',
+      period,
+      repeatNumber
+    );
+    setData13({ name: '1920x1080.mp4', url: url });
+  };
+
+  const download4 = async () => {
+    const url = await get1080x1080(
+      inputData,
+      'small',
+      'gif',
+      period,
+      repeatNumber
+    );
+    setData14({ name: '1080x1920.gif', url: url });
+  };
+
+  const download5 = async () => {
+    const url = await get1080x1080(
+      inputData,
+      'medium',
+      'gif',
+      period,
+      repeatNumber
+    );
+    setData15({ name: '1080x1080.gif', url: url });
+  };
+
+  const download6 = async () => {
+    const url = await get1080x1080(
+      inputData,
+      'large',
+      'gif',
+      period,
+      repeatNumber
+    );
+    setData16({ name: '1920x1080.gif', url: url });
+  };
+
   const fetchSquareVideo = async () => {
     setIsLoading(true);
-    /*     const url = await get1080x1080(inputData);
-    download(url, "1920x1080.gif"); */
-    Promise.all([
-      await get1080x1080(inputData, 'small', 'mp4', period, repeatNumber),
-      await get1080x1080(inputData, 'medium', 'mp4', period, repeatNumber),
-      await get1080x1080(inputData, 'large', 'mp4', period, repeatNumber),
-      await get1080x1080(inputData, 'small', 'gif', period, repeatNumber),
-      await get1080x1080(inputData, 'medium', 'gif', period, repeatNumber),
-      await get1080x1080(inputData, 'large', 'gif', period, repeatNumber),
+    setData11(null);
+    setData12(null);
+    setData13(null);
+    setData14(null);
+    setData15(null);
+    setData16(null);
+    download1();
+    download2();
+    download3();
+    download4();
+    download5();
+    download6();
+    /*     Promise.all([
+      await get1080x1080(inputData, "small", "mp4", period, repeatNumber),
+      await get1080x1080(inputData, "medium", "mp4", period, repeatNumber),
+      await get1080x1080(inputData, "large", "mp4", period, repeatNumber),
+      await get1080x1080(inputData, "small", "gif", period, repeatNumber),
+      await get1080x1080(inputData, "medium", "gif", period, repeatNumber),
+      await get1080x1080(inputData, "large", "gif", period, repeatNumber)
     ]).then((values) => {
       values.forEach((value, index) => {
-        console.log('result in promice', value);
+        console.log("result in promice", value);
 
         download(value, mp4Indexes[index]);
       });
       setIsLoading(false);
-    });
+    }); */
   };
 
   const handleInputChange = (e) => {
