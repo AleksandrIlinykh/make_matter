@@ -70,7 +70,7 @@ export default function App() {
   const download2 = async () => {
     const url = await get1080x1080(
       inputData,
-      'small',
+      'medium',
       'mp4',
       period,
       repeatNumber
@@ -81,7 +81,7 @@ export default function App() {
   const download3 = async () => {
     const url = await get1080x1080(
       inputData,
-      'medium',
+      'large',
       'mp4',
       period,
       repeatNumber
