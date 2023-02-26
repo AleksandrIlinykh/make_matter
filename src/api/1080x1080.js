@@ -43,19 +43,19 @@ export const get1080x1080 = async (
     small: {
       width: 1080,
       height: 1920,
-      fontSize: '130px',
+      fontSize: '120px',
       margin: '283px 267px 283px 113px',
     },
     medium: {
       width: 1080,
       height: 1080,
-      fontSize: '130px',
+      fontSize: '120px',
       margin: '396px 147px 396px 67px',
     },
     large: {
       width: 1920,
       height: 1080,
-      fontSize: '240px',
+      fontSize: '220px',
       margin: '123px 589px 123px 194px',
     },
   };
