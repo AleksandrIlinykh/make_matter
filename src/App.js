@@ -131,11 +131,11 @@ export default function App() {
     setData15(null);
     setData16(null);
     download1();
-    download2();
+    /*     download2();
     download3();
     download4();
     download5();
-    download6();
+    download6(); */
     /*     Promise.all([
       await get1080x1080(inputData, "small", "mp4", period, repeatNumber),
       await get1080x1080(inputData, "medium", "mp4", period, repeatNumber),
