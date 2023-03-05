@@ -4,7 +4,7 @@ function timeout(ms) {
 
 const myHeaders = new Headers();
 myHeaders.append('Content-Type', 'application/json');
-myHeaders.append('x-api-key', 'sOP6UCkvBw5VXAJrljLFz94Zndc1rQlz7faDa6I3');
+myHeaders.append('x-api-key', 'NOYkJsQW2U3pBmd7RiK9l3P2gvUy5NGmaSutw7ok');
 
 const requestResultOptions = {
   method: 'GET',
@@ -16,9 +16,18 @@ const requestResult = async (id) => {
   const {
     response: { url },
   } = await fetch(
-    `https://api.shotstack.io/stage/render/${id}`,
+    `https://api.shotstack.io/v1/render/${id}`,
     requestResultOptions
-  ).then((response) => response.json());
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw new Error(error);
+    });
   return url;
 };
 
@@ -61,7 +70,7 @@ export const get1080x1080 = async (
   };
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('x-api-key', 'sOP6UCkvBw5VXAJrljLFz94Zndc1rQlz7faDa6I3');
+  myHeaders.append('x-api-key', 'NOYkJsQW2U3pBmd7RiK9l3P2gvUy5NGmaSutw7ok');
 
   const clips = [];
 
@@ -141,9 +150,19 @@ export const get1080x1080 = async (
   };
 
   const responseJson = await fetch(
-    'https://api.shotstack.io/stage/render',
+    'https://api.shotstack.io/v1/render',
     requestOptions
-  ).then((response) => response.json());
+  )
+    .then((response) => {
+      console.log('response', response);
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw new Error(error);
+    });
 
   const {
     response: { id },

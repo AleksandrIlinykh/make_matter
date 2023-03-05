@@ -2,7 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import useDownloader from 'react-use-downloader';
 import { get1080x1080 } from './api/1080x1080';
 import { periods, repeats } from './constants';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.css';
+import { type } from '@testing-library/user-event/dist/type';
 
 export default function App() {
   const { download } = useDownloader();
@@ -57,69 +60,117 @@ export default function App() {
   }, [data1, data2, data3, data4, data5, data6]);
 
   const download1 = async () => {
-    const url = await get1080x1080(
-      inputData,
-      'small',
-      'mp4',
-      period,
-      repeatNumber
-    );
-    setData11({ name: '1080x1920.mp4', url: url });
+    try {
+      const url = await get1080x1080(
+        inputData,
+        'small',
+        'mp4',
+        period,
+        repeatNumber
+      );
+      setData11({ name: '1080x1920.mp4', url: url });
+    } catch (error) {
+      setIsLoading(false);
+      toast(
+        `Something goes wrong, please contact your administrator. ${error}`,
+        { type: 'error' }
+      );
+    }
   };
 
   const download2 = async () => {
-    const url = await get1080x1080(
-      inputData,
-      'medium',
-      'mp4',
-      period,
-      repeatNumber
-    );
-    setData12({ name: '1080x1080.mp4', url: url });
+    try {
+      const url = await get1080x1080(
+        inputData,
+        'medium',
+        'mp4',
+        period,
+        repeatNumber
+      );
+      setData12({ name: '1080x1080.mp4', url: url });
+    } catch (error) {
+      setIsLoading(false);
+      toast(
+        `Something goes wrong, please contact your administrator. ${error}`,
+        { type: 'error' }
+      );
+    }
   };
 
   const download3 = async () => {
-    const url = await get1080x1080(
-      inputData,
-      'large',
-      'mp4',
-      period,
-      repeatNumber
-    );
-    setData13({ name: '1920x1080.mp4', url: url });
+    try {
+      const url = await get1080x1080(
+        inputData,
+        'large',
+        'mp4',
+        period,
+        repeatNumber
+      );
+      setData13({ name: '1920x1080.mp4', url: url });
+    } catch (error) {
+      setIsLoading(false);
+      toast(
+        `Something goes wrong, please contact your administrator. ${error}`,
+        { type: 'error' }
+      );
+    }
   };
 
   const download4 = async () => {
-    const url = await get1080x1080(
-      inputData,
-      'small',
-      'gif',
-      period,
-      repeatNumber
-    );
-    setData14({ name: '1080x1920.gif', url: url });
+    try {
+      const url = await get1080x1080(
+        inputData,
+        'small',
+        'gif',
+        period,
+        repeatNumber
+      );
+      setData14({ name: '1080x1920.gif', url: url });
+    } catch (error) {
+      setIsLoading(false);
+      toast(
+        `Something goes wrong, please contact your administrator. ${error}`,
+        { type: 'error' }
+      );
+    }
   };
 
   const download5 = async () => {
-    const url = await get1080x1080(
-      inputData,
-      'medium',
-      'gif',
-      period,
-      repeatNumber
-    );
-    setData15({ name: '1080x1080.gif', url: url });
+    try {
+      const url = await get1080x1080(
+        inputData,
+        'medium',
+        'gif',
+        period,
+        repeatNumber
+      );
+      setData15({ name: '1080x1080.gif', url: url });
+    } catch (error) {
+      setIsLoading(false);
+      toast(
+        `Something goes wrong, please contact your administrator. ${error}`,
+        { type: 'error' }
+      );
+    }
   };
 
   const download6 = async () => {
-    const url = await get1080x1080(
-      inputData,
-      'large',
-      'gif',
-      period,
-      repeatNumber
-    );
-    setData16({ name: '1920x1080.gif', url: url });
+    try {
+      const url = await get1080x1080(
+        inputData,
+        'large',
+        'gif',
+        period,
+        repeatNumber
+      );
+      setData16({ name: '1920x1080.gif', url: url });
+    } catch (error) {
+      setIsLoading(false);
+      toast(
+        `Something goes wrong, please contact your administrator. ${error}`,
+        { type: 'error' }
+      );
+    }
   };
 
   const fetchSquareVideo = async () => {
@@ -136,21 +187,6 @@ export default function App() {
     download4();
     download5();
     download6();
-    /*     Promise.all([
-      await get1080x1080(inputData, "small", "mp4", period, repeatNumber),
-      await get1080x1080(inputData, "medium", "mp4", period, repeatNumber),
-      await get1080x1080(inputData, "large", "mp4", period, repeatNumber),
-      await get1080x1080(inputData, "small", "gif", period, repeatNumber),
-      await get1080x1080(inputData, "medium", "gif", period, repeatNumber),
-      await get1080x1080(inputData, "large", "gif", period, repeatNumber)
-    ]).then((values) => {
-      values.forEach((value, index) => {
-        console.log("result in promice", value);
-
-        download(value, mp4Indexes[index]);
-      });
-      setIsLoading(false);
-    }); */
   };
 
   const handleInputChange = (e) => {
@@ -163,6 +199,7 @@ export default function App() {
 
   return (
     <div className="App">
+      <ToastContainer />
       {isLoading && (
         <div className="preloaderContainer">
           <div class="lds-spinner">
