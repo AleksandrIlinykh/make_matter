@@ -55,7 +55,7 @@ export default function App() {
         setIsLoading(false);
       } catch (error) {
         toast(
-          `Downloading goes wrong, please contact your administrator. ${error}`,
+          `It seems like I’m having some trouble (-_-) Please, let Igor know. ${error}`,
           { type: "error", autoClose: false }
         );
       }
@@ -75,7 +75,7 @@ export default function App() {
     } catch (error) {
       setIsLoading(false);
       toast(
-        `Something goes wrong, please contact your administrator. ${error}`,
+        `It seems like I’m having some trouble (-_-) Please, let Igor know. ${error}`,
         { type: "error", autoClose: false }
       );
     }
