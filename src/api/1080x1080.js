@@ -150,7 +150,7 @@ export const get1080x1080 = async (
   };
 
   const responseJson = await fetch(
-    "https://api.shotstack.io/v1/render1",
+    "https://api.shotstack.io/v1/render",
     requestOptions
   )
     .then((response) => {
