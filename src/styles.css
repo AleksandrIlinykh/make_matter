@@ -14,7 +14,7 @@ body,
 
 .App {
   width: 100%;
-  font-family: "Regular", sans-serif;
+  font-family: "Bold", sans-serif;
   text-align: center;
   display: flex;
   flex-direction: column;
