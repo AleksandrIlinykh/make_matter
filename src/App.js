@@ -221,7 +221,7 @@ export default function App() {
           </div>
         </div>
       )}
-      <h1 className="header">make _____ matter </h1>
+      <h1 className="header">carrousel </h1>
       <p className="description"> paste names below, one name per line </p>
       <div className="displayElements">
         <textarea
