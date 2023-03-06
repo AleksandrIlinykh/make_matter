@@ -56,7 +56,7 @@ export default function App() {
       } catch (error) {
         toast(
           `It seems like I’m having some trouble (-_-) Please, let Igor know. ${error}`,
-          { type: "error", autoClose: false }
+          { type: "error", autoClose: false, className: "errorText" }
         );
       }
     }
@@ -76,7 +76,7 @@ export default function App() {
       setIsLoading(false);
       toast(
         `It seems like I’m having some trouble (-_-) Please, let Igor know. ${error}`,
-        { type: "error", autoClose: false }
+        { type: "error", autoClose: false, className: "errorText" }
       );
     }
   };
@@ -95,7 +95,7 @@ export default function App() {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: "error", autoClose: false }
+        { type: "error", autoClose: false, className: "errorText" }
       );
     }
   };
@@ -114,7 +114,7 @@ export default function App() {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: "error", autoClose: false }
+        { type: "error", autoClose: false, className: "errorText" }
       );
     }
   };
@@ -133,7 +133,7 @@ export default function App() {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: "error", autoClose: false }
+        { type: "error", autoClose: false, className: "errorText" }
       );
     }
   };
@@ -152,7 +152,7 @@ export default function App() {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: "error", autoClose: false }
+        { type: "error", autoClose: false, className: "errorText" }
       );
     }
   };
@@ -171,7 +171,7 @@ export default function App() {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: "error", autoClose: false }
+        { type: "error", autoClose: false, className: "errorText" }
       );
     }
   };
