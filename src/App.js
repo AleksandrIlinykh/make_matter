@@ -63,7 +63,6 @@ export default function App() {
   }, [data1, data2, data3, data4, data5, data6, download]);
 
   const download1 = async () => {
-    console.log("API request");
     try {
       const url = await get1080x1080(
         inputData,

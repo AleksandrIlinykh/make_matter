@@ -3,13 +3,13 @@ function timeout(ms) {
 }
 
 const myHeaders = new Headers();
-myHeaders.append('Content-Type', 'application/json');
-myHeaders.append('x-api-key', 'NOYkJsQW2U3pBmd7RiK9l3P2gvUy5NGmaSutw7ok');
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("x-api-key", "NOYkJsQW2U3pBmd7RiK9l3P2gvUy5NGmaSutw7ok");
 
 const requestResultOptions = {
-  method: 'GET',
+  method: "GET",
   headers: myHeaders,
-  redirect: 'follow',
+  redirect: "follow",
 };
 
 const requestResult = async (id) => {
@@ -43,8 +43,8 @@ async function reqRep(id) {
 
 export const get1080x1080 = async (
   names,
-  variant = 'small',
-  format = 'gif',
+  variant = "small",
+  format = "gif",
   period,
   repeatNumber
 ) => {
@@ -52,46 +52,46 @@ export const get1080x1080 = async (
     small: {
       width: 1080,
       height: 1920,
-      fontSize: '120px',
-      margin: '283px 267px 283px 113px',
+      fontSize: "120px",
+      margin: "283px 267px 283px 113px",
     },
     medium: {
       width: 1080,
       height: 1080,
-      fontSize: '120px',
-      margin: '396px 147px 396px 67px',
+      fontSize: "120px",
+      margin: "396px 147px 396px 67px",
     },
     large: {
       width: 1920,
       height: 1080,
-      fontSize: '220px',
-      margin: '123px 589px 123px 194px',
+      fontSize: "220px",
+      margin: "123px 589px 123px 194px",
     },
   };
   const myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('x-api-key', 'NOYkJsQW2U3pBmd7RiK9l3P2gvUy5NGmaSutw7ok');
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("x-api-key", "NOYkJsQW2U3pBmd7RiK9l3P2gvUy5NGmaSutw7ok");
 
   const clips = [];
 
   for (
     let index = 0;
-    index < names.length * (format === 'gif' ? 1 : Number(repeatNumber));
+    index < names.length * (format === "gif" ? 1 : Number(repeatNumber));
     index++
   ) {
     clips.push(
       ...[
         {
           asset: {
-            type: 'html',
+            type: "html",
             html:
-              '<div><p> <br> ' +
+              "<div><p> <br> " +
               names[index % names.length] +
-              '<br>  </p></div>',
+              "<br>  </p></div>",
             css:
               "div { text-align: left; font-family: 'HelveticaNeueCyr'; font-style: normal; font-weight: 700; font-size:" +
               dimension[variant].fontSize +
-              '; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } ',
+              "; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } ",
           },
           start: index * Number(period),
           length: 0.95 * Number(period),
@@ -101,12 +101,12 @@ export const get1080x1080 = async (
         },
         {
           asset: {
-            type: 'html',
-            html: '<div><p>make <br> <br> matter </p></div>',
+            type: "html",
+            html: "<div><p>make <br> <br> matter </p></div>",
             css:
               "div { text-align: left; font-family: 'HelveticaNeueCyr'; font-style: normal; font-weight: 700; font-size:" +
               dimension[variant].fontSize +
-              '; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } ',
+              "; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } ",
           },
           start: index * Number(period),
           length: Number(period),
@@ -122,10 +122,10 @@ export const get1080x1080 = async (
     timeline: {
       fonts: [
         {
-          src: 'https://vm-9dc5608b.na4u.ru/info/api/assets/HelveticaNeueCyr.ttf',
+          src: "https://vm-9dc5608b.na4u.ru/info/api/assets/HelveticaNeueCyr.ttf",
         },
       ],
-      background: '#000000',
+      background: "#000000",
       tracks: [
         {
           clips: clips,
@@ -138,23 +138,22 @@ export const get1080x1080 = async (
         width: dimension[variant].width,
         height: dimension[variant].height,
       },
-      ...(format === 'gif' && { repeat: true }),
+      ...(format === "gif" && { repeat: true }),
     },
   });
 
   const requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: raw,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const responseJson = await fetch(
-    'https://api.shotstack.io/v1/render',
+    "https://api.shotstack.io/v1/render",
     requestOptions
   )
     .then((response) => {
-      console.log('response', response);
       if (!response.ok) {
         throw new Error(response.status);
       }
