@@ -1,16 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import useDownloader from 'react-use-downloader';
-import { get1080x1080 } from './api/1080x1080';
-import { periods, repeats } from './constants';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './styles.css';
-import { type } from '@testing-library/user-event/dist/type';
+import React, { useState, useRef, useEffect } from "react";
+import useDownloader from "react-use-downloader";
+import { get1080x1080 } from "./api/1080x1080";
+import { periods, repeats } from "./constants";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./styles.css";
 
 export default function App() {
   const { download } = useDownloader();
   const [isLoading, setIsLoading] = useState(false);
-  const [inputData, setInputData] = useState(['']);
+  const [inputData, setInputData] = useState([""]);
 
   const [period, setPeriod] = useState(1);
 
@@ -23,15 +22,6 @@ export default function App() {
   const handleRepeatNumberChange = ({ target: { value } }) => {
     setRepeatNumber(value);
   };
-
-  const mp4Indexes = [
-    '1080x1920.mp4',
-    '1080x1080.mp4',
-    '1920x1080.mp4',
-    '1080x1920.gif',
-    '1080x1080.gif',
-    '1920x1080.gif',
-  ];
 
   const [data1, setData11] = useState(null);
   const [data2, setData12] = useState(null);
@@ -49,31 +39,45 @@ export default function App() {
       data5?.url &&
       data6?.url
     ) {
-      download(data1.url, data1.name);
-      download(data2.url, data2.name);
-      download(data3.url, data3.name);
-      download(data4.url, data4.name);
-      download(data5.url, data5.name);
-      download(data6.url, data6.name);
-      setIsLoading(false);
+      try {
+        download(data1.url, data1.name);
+        download(data2.url, data2.name);
+        download(data3.url, data3.name);
+        download(data4.url, data4.name);
+        download(data5.url, data5.name);
+        download(data6.url, data6.name);
+        setData11({ name: "1080x1920.mp4", url: "" });
+        setData12({ name: "1080x1920.mp4", url: "" });
+        setData13({ name: "1080x1920.mp4", url: "" });
+        setData14({ name: "1080x1920.mp4", url: "" });
+        setData15({ name: "1080x1920.mp4", url: "" });
+        setData16({ name: "1080x1920.mp4", url: "" });
+        setIsLoading(false);
+      } catch (error) {
+        toast(
+          `Downloading goes wrong, please contact your administrator. ${error}`,
+          { type: "error", autoClose: false }
+        );
+      }
     }
-  }, [data1, data2, data3, data4, data5, data6]);
+  }, [data1, data2, data3, data4, data5, data6, download]);
 
   const download1 = async () => {
+    console.log("API request");
     try {
       const url = await get1080x1080(
         inputData,
-        'small',
-        'mp4',
+        "small",
+        "mp4",
         period,
         repeatNumber
       );
-      setData11({ name: '1080x1920.mp4', url: url });
+      setData11({ name: "1080x1920.mp4", url: url });
     } catch (error) {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: 'error' }
+        { type: "error", autoClose: false }
       );
     }
   };
@@ -82,17 +86,17 @@ export default function App() {
     try {
       const url = await get1080x1080(
         inputData,
-        'medium',
-        'mp4',
+        "medium",
+        "mp4",
         period,
         repeatNumber
       );
-      setData12({ name: '1080x1080.mp4', url: url });
+      setData12({ name: "1080x1080.mp4", url: url });
     } catch (error) {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: 'error' }
+        { type: "error", autoClose: false }
       );
     }
   };
@@ -101,17 +105,17 @@ export default function App() {
     try {
       const url = await get1080x1080(
         inputData,
-        'large',
-        'mp4',
+        "large",
+        "mp4",
         period,
         repeatNumber
       );
-      setData13({ name: '1920x1080.mp4', url: url });
+      setData13({ name: "1920x1080.mp4", url: url });
     } catch (error) {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: 'error' }
+        { type: "error", autoClose: false }
       );
     }
   };
@@ -120,17 +124,17 @@ export default function App() {
     try {
       const url = await get1080x1080(
         inputData,
-        'small',
-        'gif',
+        "small",
+        "gif",
         period,
         repeatNumber
       );
-      setData14({ name: '1080x1920.gif', url: url });
+      setData14({ name: "1080x1920.gif", url: url });
     } catch (error) {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: 'error' }
+        { type: "error", autoClose: false }
       );
     }
   };
@@ -139,17 +143,17 @@ export default function App() {
     try {
       const url = await get1080x1080(
         inputData,
-        'medium',
-        'gif',
+        "medium",
+        "gif",
         period,
         repeatNumber
       );
-      setData15({ name: '1080x1080.gif', url: url });
+      setData15({ name: "1080x1080.gif", url: url });
     } catch (error) {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: 'error' }
+        { type: "error", autoClose: false }
       );
     }
   };
@@ -158,17 +162,17 @@ export default function App() {
     try {
       const url = await get1080x1080(
         inputData,
-        'large',
-        'gif',
+        "large",
+        "gif",
         period,
         repeatNumber
       );
-      setData16({ name: '1920x1080.gif', url: url });
+      setData16({ name: "1920x1080.gif", url: url });
     } catch (error) {
       setIsLoading(false);
       toast(
         `Something goes wrong, please contact your administrator. ${error}`,
-        { type: 'error' }
+        { type: "error", autoClose: false }
       );
     }
   };
@@ -191,7 +195,7 @@ export default function App() {
 
   const handleInputChange = (e) => {
     if (!e.target.value) {
-      setInputData([' ']);
+      setInputData([" "]);
     } else {
       setInputData(e.target.value.split(/\r?\n/));
     }
@@ -249,18 +253,18 @@ export default function App() {
         <button
           className={`${
             inputData.length < 3
-              ? 'button'
+              ? "button"
               : isLoading
-              ? 'button'
-              : 'button active'
+              ? "button"
+              : "button active"
           }`}
           onClick={fetchSquareVideo}
         >
           {inputData.length < 3
-            ? 'type at least 3 names'
+            ? "type at least 3 names"
             : isLoading
-            ? 'loading'
-            : 'Generate'}
+            ? "loading"
+            : "Generate"}
         </button>
         <select
           name="repeats"
@@ -297,24 +301,24 @@ function Canvas({ isHidden, names, variant = 0 }) {
 
   useEffect(() => {
     if (canvas.current) {
-      ctx.current = canvas.current.getContext('2d');
+      ctx.current = canvas.current.getContext("2d");
       ctx.current.font = `700 ${fontWeight}px Bold, sans-serif`;
-      ctx.current.textBaseline = 'top';
+      ctx.current.textBaseline = "top";
     }
-  }, []);
+  }, [fontWeight]);
 
   useEffect(() => {
     function draw() {
       if (ctx?.current) {
         ctx.current.beginPath();
         ctx.current.rect(0, 0, width, height);
-        ctx.current.fillStyle = 'black';
+        ctx.current.fillStyle = "black";
         ctx.current.fill();
 
-        ctx.current.fillStyle = '#FFFFFF';
-        ctx.current.fillText('make', gap, (height - fontWeight * 3) / 2);
+        ctx.current.fillStyle = "#FFFFFF";
+        ctx.current.fillText("make", gap, (height - fontWeight * 3) / 2);
         ctx.current.fillText(
-          'matter',
+          "matter",
           gap,
           (height - fontWeight * 3) / 2 + fontWeight * 2
         );
@@ -327,10 +331,10 @@ function Canvas({ isHidden, names, variant = 0 }) {
           width - gap + fontWeight / 10,
           fontWeight
         );
-        ctx.current.fillStyle = 'black';
+        ctx.current.fillStyle = "black";
         ctx.current.fill();
         //paint new name
-        ctx.current.fillStyle = '#FFFFFF';
+        ctx.current.fillStyle = "#FFFFFF";
         ctx.current.fillText(
           name,
           gap,
@@ -347,11 +351,11 @@ function Canvas({ isHidden, names, variant = 0 }) {
         clearInterval(drawInterval);
       };
     }
-  }, [names]);
+  }, [fontWeight, gap, height, index, names, width]);
 
   return (
     <canvas
-      className={isHidden && 'isHidden'}
+      className={isHidden && "isHidden"}
       ref={canvas}
       width={widths[variant]}
       height={heights[variant]}
