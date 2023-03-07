@@ -4,7 +4,7 @@ function timeout(ms) {
 
 const myHeaders = new Headers();
 myHeaders.append('Content-Type', 'application/json');
-myHeaders.append('x-api-key', 'sOP6UCkvBw5VXAJrljLFz94Zndc1rQlz7faDa6I3');
+myHeaders.append('x-api-key', 'PX9SAzAlbk8GgtWJPloa5aWMSJYdpqWx4bboNRum');
 
 const requestResultOptions = {
   method: 'GET',
@@ -32,7 +32,7 @@ const requestResult = async (id) => {
 };
 
 async function reqRep(id) {
-  await timeout(2000);
+  await timeout(15000);
   const [url, status] = await requestResult(id);
   if (url) {
     return url;
@@ -50,7 +50,7 @@ export const get1080x1080 = async (
   format = 'gif',
   period,
   repeatNumber,
-  coefficient = 2
+  coefficient = 2.5
 ) => {
   const dimension = {
     small: {
@@ -80,7 +80,7 @@ export const get1080x1080 = async (
   };
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('x-api-key', 'sOP6UCkvBw5VXAJrljLFz94Zndc1rQlz7faDa6I3');
+  myHeaders.append('x-api-key', 'PX9SAzAlbk8GgtWJPloa5aWMSJYdpqWx4bboNRum');
 
   const clips = [];
 
