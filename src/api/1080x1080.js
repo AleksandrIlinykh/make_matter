@@ -3,13 +3,13 @@ function timeout(ms) {
 }
 
 const myHeaders = new Headers();
-myHeaders.append('Content-Type', 'application/json');
-myHeaders.append('x-api-key', 'PX9SAzAlbk8GgtWJPloa5aWMSJYdpqWx4bboNRum');
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("x-api-key", "PX9SAzAlbk8GgtWJPloa5aWMSJYdpqWx4bboNRum");
 
 const requestResultOptions = {
-  method: 'GET',
+  method: "GET",
   headers: myHeaders,
-  redirect: 'follow',
+  redirect: "follow",
 };
 
 const requestResult = async (id) => {
@@ -37,8 +37,8 @@ async function reqRep(id) {
   if (url) {
     return url;
   } else {
-    if (status === 'failed') {
-      throw new Error('failed to render!');
+    if (status === "failed") {
+      throw new Error("failed to render!");
     }
     return await reqRep(id);
   }
@@ -46,8 +46,8 @@ async function reqRep(id) {
 
 export const get1080x1080 = async (
   names,
-  variant = 'small',
-  format = 'gif',
+  variant = "small",
+  format = "gif",
   period,
   repeatNumber,
   coefficient = 2.5
@@ -78,31 +78,56 @@ export const get1080x1080 = async (
       }px ${194 / coefficient}px `,
     },
   };
+
+  const dimensionFull = {
+    small: {
+      width: 1080,
+      height: 1920,
+      fontSize: `${120}px`,
+      margin: `${283}px ${267}px ${283}px ${113}px `,
+    },
+    medium: {
+      width: 1080,
+      height: 1080,
+      fontSize: `${120}px`,
+      margin: `${396}px ${147}px ${396}px ${67}px `,
+    },
+    large: {
+      width: 1920,
+      height: 1080,
+      fontSize: `${220}px`,
+      margin: `${123}px ${589}px ${123}px ${194}px `,
+    },
+  };
   const myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('x-api-key', 'PX9SAzAlbk8GgtWJPloa5aWMSJYdpqWx4bboNRum');
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("x-api-key", "PX9SAzAlbk8GgtWJPloa5aWMSJYdpqWx4bboNRum");
 
   const clips = [];
 
   for (
     let index = 0;
     index <
-    (format === 'gif' ? names.length : names.length * Number(repeatNumber));
+    (format === "gif" ? names.length : names.length * Number(repeatNumber));
     index++
   ) {
     clips.push(
       ...[
         {
           asset: {
-            type: 'html',
+            type: "html",
             html:
-              '<div><p> <br> ' +
+              "<div><p> <br> " +
               names[index % names.length] +
-              '<br>  </p></div>',
+              "<br>  </p></div>",
             css:
               "div { text-align: left; font-family: 'HelveticaNeueCyr'; font-style: normal; font-weight: 700; font-size:" +
-              dimension[variant].fontSize +
-              '; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } ',
+              `${
+                format === "gif"
+                  ? dimension[variant].fontSize
+                  : dimensionFull[variant].fontSize
+              }` +
+              "; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } ",
           },
           start: index * Number(period),
           length: 0.95 * Number(period),
@@ -116,16 +141,20 @@ export const get1080x1080 = async (
 
   clips.push({
     asset: {
-      type: 'html',
-      html: '<div><p>make <br> <br> matter </p></div>',
+      type: "html",
+      html: "<div><p>make <br> <br> matter </p></div>",
       css:
         "div { text-align: left; font-family: 'HelveticaNeueCyr'; font-style: normal; font-weight: 700; font-size:" +
-        dimension[variant].fontSize +
-        '; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } ',
+        `${
+          format === "gif"
+            ? dimension[variant].fontSize
+            : dimensionFull[variant].fontSize
+        }` +
+        "; line-height: 80; color: #ffffff;  width: 967px; } p text-align: left;   width: 100%; } ",
     },
     start: 0,
     length:
-      format === 'gif'
+      format === "gif"
         ? Number(period) * names.length
         : Number(period) * names.length * Number(repeatNumber),
     offset: {
@@ -136,10 +165,10 @@ export const get1080x1080 = async (
     timeline: {
       fonts: [
         {
-          src: 'https://vm-9dc5608b.na4u.ru/info/api/assets/HelveticaNeueCyr.ttf',
+          src: "https://vm-9dc5608b.na4u.ru/info/api/assets/HelveticaNeueCyr.ttf",
         },
       ],
-      background: '#000000',
+      background: "#000000",
       tracks: [
         {
           clips: clips,
@@ -149,26 +178,32 @@ export const get1080x1080 = async (
     output: {
       format: format,
       size: {
-        width: dimension[variant].width,
-        height: dimension[variant].height,
+        width:
+          format === "gif"
+            ? dimension[variant].width
+            : dimensionFull[variant].width,
+        height:
+          format === "gif"
+            ? dimension[variant].height
+            : dimensionFull[variant].height,
       },
       /*       ...(format === 'gif' && { repeat: true }), */
     },
   });
 
   const requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: myHeaders,
     body: raw,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   const responseJson = await fetch(
-    'https://api.shotstack.io/stage/render',
+    "https://api.shotstack.io/stage/render",
     requestOptions
   )
     .then((response) => {
-      console.log('response', response);
+      console.log("response", response);
       if (!response.ok) {
         throw new Error(response.status);
       }
