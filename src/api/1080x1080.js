@@ -54,28 +54,19 @@ export const get1080x1080 = async (
 ) => {
   const dimension = {
     small: {
-      width: 1080 / coefficient,
-      height: 1920 / coefficient,
-      fontSize: `${120 / coefficient}px`,
-      margin: `${283 / coefficient}px ${267 / coefficient}px ${
-        283 / coefficient
-      }px ${113 / coefficient}px `,
+      width: (1080 / coefficient).toFixed(),
+      height: (1920 / coefficient).toFixed(),
+      fontSize: `${(120 / coefficient).toFixed()}px`,
     },
     medium: {
-      width: 1080 / coefficient,
-      height: 1080 / coefficient,
-      fontSize: `${120 / coefficient}px`,
-      margin: `${396 / coefficient}px ${147 / coefficient}px ${
-        396 / coefficient
-      }px ${67 / coefficient}px `,
+      width: (1080 / coefficient).toFixed(),
+      height: (1080 / coefficient).toFixed(),
+      fontSize: `${(120 / coefficient).toFixed()}px`,
     },
     large: {
-      width: 1920 / coefficient,
-      height: 1080 / coefficient,
-      fontSize: `${220 / coefficient}px`,
-      margin: `${123 / coefficient}px ${589 / coefficient}px ${
-        123 / coefficient
-      }px ${194 / coefficient}px `,
+      width: (1920 / coefficient).toFixed(),
+      height: (1080 / coefficient).toFixed(),
+      fontSize: `${(220 / coefficient).toFixed()}px`,
     },
   };
 
@@ -84,19 +75,16 @@ export const get1080x1080 = async (
       width: 1080,
       height: 1920,
       fontSize: `${120}px`,
-      margin: `${283}px ${267}px ${283}px ${113}px `,
     },
     medium: {
       width: 1080,
       height: 1080,
       fontSize: `${120}px`,
-      margin: `${396}px ${147}px ${396}px ${67}px `,
     },
     large: {
       width: 1920,
       height: 1080,
       fontSize: `${220}px`,
-      margin: `${123}px ${589}px ${123}px ${194}px `,
     },
   };
   const myHeaders = new Headers();
@@ -181,12 +169,12 @@ export const get1080x1080 = async (
       size: {
         width:
           format === "gif"
-            ? dimension[variant].width
-            : dimensionFull[variant].width,
+            ? Number(dimension[variant].width)
+            : Number(dimensionFull[variant].width),
         height:
           format === "gif"
-            ? dimension[variant].height
-            : dimensionFull[variant].height,
+            ? Number(dimension[variant].height)
+            : Number(dimensionFull[variant].height),
       },
       /*       ...(format === 'gif' && { repeat: true }), */
     },
