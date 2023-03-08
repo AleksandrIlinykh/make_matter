@@ -50,7 +50,7 @@ export const get1080x1080 = async (
   format = "gif",
   period,
   repeatNumber,
-  coefficient = 2.5
+  coefficient = 3
 ) => {
   const dimension = {
     small: {
@@ -121,7 +121,7 @@ export const get1080x1080 = async (
               names[index % names.length] +
               "<br>  </p></div>",
             css:
-              "div { text-align: left; font-family: 'HelveticaNeueCyr'; font-style: normal; font-weight: 700; font-size:" +
+              "div { text-align: left; font-family: 'HelveticaNeueLt Pro 55 Roman'; font-style: normal; font-weight: 700; font-size:" +
               `${
                 format === "gif"
                   ? dimension[variant].fontSize
@@ -144,7 +144,7 @@ export const get1080x1080 = async (
       type: "html",
       html: "<div><p>make <br> <br> matter </p></div>",
       css:
-        "div { text-align: left; font-family: 'HelveticaNeueCyr'; font-style: normal; font-weight: 700; font-size:" +
+        "div { text-align: left; font-family: 'HelveticaNeueLt Pro 55 Roman'; font-style: normal; font-weight: 700; font-size:" +
         `${
           format === "gif"
             ? dimension[variant].fontSize
@@ -163,6 +163,7 @@ export const get1080x1080 = async (
   });
   const raw = JSON.stringify({
     timeline: {
+      cache: false,
       fonts: [
         {
           src: "https://vm-9dc5608b.na4u.ru/info/api/assets/HelveticaNeueCyr.ttf",
